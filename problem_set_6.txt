@@ -1,0 +1,173 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      18.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2023
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased;
+                see help set_maxvar.
+            3. New update available; type -update all-
+      
+     1 . use https://users.ssc.wisc.edu/~mckelvey/ec400/hprice
+      (Source: Wooldridge, 6th Edition)
+      
+     2 . 
+     3 . 
+     4 . des
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/hprice.dta
+       Observations:            88                  Source: Wooldridge, 6th Edition
+          Variables:             6                  9 Oct 2018 22:18
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      price           float   %9.0g                 house price, $1000s
+      assess          float   %9.0g                 assessed value, $1000s
+      bdrms           byte    %9.0g                 number of bdrms
+      lotsize         float   %9.0g                 size of lot in square feet
+      sqrft           int     %9.0g                 size of house in square feet
+      colonial        byte    %9.0g                 =1 if home is colonial style
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     5 . gen lnprice = ln(price)
+      
+     6 . gen lnsqrft = ln(lnsqrft)
+      lnsqrft not found
+      r(111);
+      
+     7 . gen lnsqrft = ln(sqrft)
+      
+     8 . reg lnprice lnsqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      79.25
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.5530
+                                                      Root MSE          =     .20414
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+           lnprice | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+           lnsqrft |   .8726595   .0980257     8.90   0.000     .6777909    1.067528
+             _cons |  -.9751299   .7446366    -1.31   0.194    -2.455418    .5051587
+      ------------------------------------------------------------------------------
+      
+     9 . reg price lnsqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      44.71
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.5630
+                                                      Root MSE          =     68.297
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+           lnsqrft |   297.9113   44.55538     6.69   0.000     209.3381    386.4845
+             _cons |   -1962.42   334.4904    -5.87   0.000    -2627.365   -1297.475
+      ------------------------------------------------------------------------------
+      
+    10 . reg lnprice sqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      93.56
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.5837
+                                                      Root MSE          =     .19701
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+           lnprice | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             sqrft |   .0004018   .0000415     9.67   0.000     .0003192    .0004844
+             _cons |    4.82403   .0869121    55.50   0.000     4.651254    4.996805
+      ------------------------------------------------------------------------------
+      
+    11 . reg price sqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      51.19
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.6208
+                                                      Root MSE          =     63.617
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             sqrft |    .140211   .0195978     7.15   0.000     .1012519      .17917
+             _cons |   11.20415   36.80591     0.30   0.762    -61.96359    84.37188
+      ------------------------------------------------------------------------------
+      
+    12 . gen sqrft2 = sqrft^2
+      
+    13 . reg price sqrft sqrft2, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(2, 85)          =      30.93
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.6408
+                                                      Root MSE          =     62.277
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             sqrft |  -.0171086   .0842332    -0.20   0.840    -.1845868    .1503697
+            sqrft2 |   .0000326   .0000196     1.67   0.099    -6.27e-06    .0000715
+             _cons |   184.9453   88.58007     2.09   0.040     8.824355    361.0662
+      ------------------------------------------------------------------------------
+      
+    14 . test sqrft sqrft2
+      
+       ( 1)  sqrft = 0
+       ( 2)  sqrft2 = 0
+      
+             F(  2,    85) =   30.93
+                  Prob > F =    0.0000
+      
+    15 . reg sqrft sqrft2, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =     943.54
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.9750
+                                                      Root MSE          =      91.78
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             sqrft | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            sqrft2 |   .0002022   6.58e-06    30.72   0.000     .0001891    .0002153
+             _cons |   1127.111   27.01016    41.73   0.000     1073.416    1180.805
+      ------------------------------------------------------------------------------
+      
+    16 . translate @Results problem_set_6.txt
+      file problem_set_6.txt saved as .txt format
+      
+    17 . cd "C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets"
+      C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets
+      
+    18 . translate @Results problem_set_6.txt

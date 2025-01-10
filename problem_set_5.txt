@@ -1,0 +1,233 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      18.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2023
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased;
+                see help set_maxvar.
+            3. New update available; type -update all-
+      
+     1 . use https://users.ssc.wisc.edu/~mckelvey/ec400/pcsales
+      
+     2 . des
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/pcsales.dta
+       Observations:            12                  
+          Variables:             7                  27 Feb 2023 22:20
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      sales           float   %9.0g                 Number of Sales
+      price           float   %9.0g                 Price (thousands of dollars)
+      income          float   %9.0g                 Income (millions of dollars)
+      comp            float   %9.0g                 Competitor's Price (thousands of dollars)
+      totadexp        float   %9.0g                 Total Advertising Expenditure (thousands of
+                                                      dollars) totadexp=tvadexp+radioadexp
+      tvadexp         float   %9.0g                 TV Advertising Expenditure (thousands of
+                                                      dollars)
+      radioadexp      float   %9.0g                 Radio Advertising Expenditure (thousands of
+                                                      dollars)
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     3 . reg sales price tvadexp radioadexp, robust
+      
+      Linear regression                               Number of obs     =         12
+                                                      F(3, 8)           =     542.16
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.9874
+                                                      Root MSE          =     16.871
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             sales | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             price |  -92.73821   50.85454    -1.82   0.106     -210.009    24.53257
+           tvadexp |   18.39038   2.196874     8.37   0.000     13.32438    23.45638
+        radioadexp |   17.40967    1.51778    11.47   0.000     13.90967    20.90968
+             _cons |  -567.3527   160.9363    -3.53   0.008    -938.4725   -196.2329
+      ------------------------------------------------------------------------------
+      
+     4 . reg sales price totadexp radioadexp, robust
+      
+      Linear regression                               Number of obs     =         12
+                                                      F(3, 8)           =     542.16
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.9874
+                                                      Root MSE          =     16.871
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             sales | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             price |  -92.73821   50.85454    -1.82   0.106     -210.009    24.53257
+          totadexp |   18.39038   2.196874     8.37   0.000     13.32438    23.45638
+        radioadexp |  -.9807101   2.416838    -0.41   0.696    -6.553948    4.592527
+             _cons |  -567.3527   160.9363    -3.53   0.008    -938.4725   -196.2329
+      ------------------------------------------------------------------------------
+      
+     5 . ref sales price totadexp, robust
+      command ref is unrecognized
+      r(199);
+      
+     6 . reg sales price totadexp, robust
+      
+      Linear regression                               Number of obs     =         12
+                                                      F(2, 9)           =     769.03
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.9873
+                                                      Root MSE          =     15.975
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             sales | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             price |  -100.1041   45.18659    -2.22   0.054    -202.3233    2.115091
+          totadexp |   17.60006   1.304733    13.49   0.000     14.64855    20.55157
+             _cons |  -528.7425   132.5579    -3.99   0.003    -828.6092   -228.8757
+      ------------------------------------------------------------------------------
+      
+     7 . test maeduc=paeduc
+      maeduc not found
+      r(111);
+      
+     8 . test tvadexp=radioadexp
+      tvadexp not found
+      r(111);
+      
+     9 . use https://users.ssc.wisc.edu/~mckelvey/ec400/earningsheight, clear
+      (Source: Stock and Watson, Updated 3rd Edition)
+      
+    10 . 
+    11 . 
+    12 . des
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/earningsheight.dta
+       Observations:        17,870                  Source: Stock and Watson, Updated 3rd
+                                                      Edition
+          Variables:            11                  3 Oct 2018 08:53
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      sex             byte    %9.0g      sex        Sex
+      age             byte    %12.0g     age        Age
+      mrd             byte    %24.0g     mrd        Marital Status
+      educ            byte    %9.0g                 Years of Education
+      cworker         byte    %18.0g     cworker    Class of Worker
+      region          byte    %11.0g     region     Region
+      race            float   %20.0g     race       Race/ethnicity
+      earnings        float   %9.0g                 Annual labor earnings (in 2012 US dollars)
+      height          float   %9.0g                 Height without shoes (in inches)
+      weight          float   %9.0g                 Weight without shoes (in pounds)
+      occupation      float   %23.0g     occ        Occupational category
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+    13 . tab region
+      
+           Region |      Freq.     Percent        Cum.
+      ------------+-----------------------------------
+      1:Northeast |      3,636       20.35       20.35
+        2:Midwest |      4,593       25.70       46.05
+          3:South |      5,794       32.42       78.47
+           4:West |      3,847       21.53      100.00
+      ------------+-----------------------------------
+            Total |     17,870      100.00
+      
+    14 . generate northest = region==1
+      
+    15 . generate midwest = region==2
+      
+    16 . generate south = region==3
+      
+    17 . generate west = region==4
+      
+    18 . reg earnings northeast midwest south west
+      variable northeast not found
+      r(111);
+      
+    19 . generate northeast = region==1
+      
+    20 . reg earnings northeast midwest south west
+      note: northeast omitted because of collinearity.
+      
+            Source |       SS           df       MS      Number of obs   =    17,870
+      -------------+----------------------------------   F(3, 17866)     =     66.08
+             Model |  1.4214e+11         3  4.7381e+10   Prob > F        =    0.0000
+          Residual |  1.2810e+13    17,866   717029159   R-squared       =    0.0110
+      -------------+----------------------------------   Adj R-squared   =    0.0108
+             Total |  1.2953e+13    17,869   724863544   Root MSE        =     26777
+      
+      ------------------------------------------------------------------------------
+          earnings | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+         northeast |          0  (omitted)
+           midwest |  -5068.935   594.4041    -8.53   0.000    -6234.025   -3903.846
+             south |  -7480.968   566.5302   -13.20   0.000    -8591.422   -6370.514
+              west |  -2418.547   619.3459    -3.91   0.000    -3632.525   -1204.569
+             _cons |   51124.37   444.0752   115.13   0.000     50253.94     51994.8
+      ------------------------------------------------------------------------------
+      
+    21 . reg earnings northeast midwest south, robust
+      
+      Linear regression                               Number of obs     =     17,870
+                                                      F(3, 17866)       =      65.66
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0110
+                                                      Root MSE          =      26777
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+          earnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+         northeast |   2418.547   630.9663     3.83   0.000     1181.792    3655.302
+           midwest |  -2650.388   588.5765    -4.50   0.000    -3804.055   -1496.721
+             south |  -5062.421   566.9592    -8.93   0.000    -6173.716   -3951.127
+             _cons |   48705.82   445.7698   109.26   0.000     47832.07    49579.58
+      ------------------------------------------------------------------------------
+      
+    22 . test midwest=south
+      
+       ( 1)  midwest - south = 0
+      
+             F(  1, 17866) =   21.51
+                  Prob > F =    0.0000
+      
+    23 . test midwest south northeast
+      
+       ( 1)  midwest = 0
+       ( 2)  south = 0
+       ( 3)  northeast = 0
+      
+             F(  3, 17866) =   65.66
+                  Prob > F =    0.0000
+      
+    24 . test midwest south northeast west
+      west not found
+      r(111);
+      
+    25 . cd "C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets"
+      C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets
+      
+    26 . translate @Results problem_set_5.txt

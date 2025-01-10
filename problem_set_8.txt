@@ -1,0 +1,240 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2023
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      18.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2024
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased;
+                see help set_maxvar.
+            3. New update available; type -update all-
+      
+      Checking for updates...
+      (contacting https://www.stata.com)
+      
+      Update status
+          Last check for updates:  06 Nov 2023
+          New update available:    15 May 2023  (what's new)
+          Current update level:    25 Apr 2023  (what's new)
+      
+      Possible actions
+      
+          Install available updates             (or type -update all-)
+      
+      Click to edit automatic update checking preferences
+      
+     1 . use https://users.ssc.wisc.edu/~mckelvey/ec400/murder93
+      (Source: Wooldridge, 6th Edition)
+      
+     2 . des
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/murder93.dta
+       Observations:            51                  Source: Wooldridge, 6th Edition
+          Variables:             5                  31 Oct 2018 08:08
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      id              long    %8.0g      scode      State identifier (numeric)
+      state           str2    %9s                   State identifier (two letter postal code)
+      mrdrte          float   %9.0g                 Murder rate (per 100000 population)
+      exec            float   %9.0g                 Executions (number in past 3 years)
+      unem            float   %9.0g                 Annual unemployment rate
+      -----------------------------------------------------------------------------------------
+      Sorted by: id
+      
+     3 . reg mrdrte exec, robust
+      
+      Linear regression                               Number of obs     =         51
+                                                      F(1, 49)          =       1.67
+                                                      Prob > F          =     0.2018
+                                                      R-squared         =     0.0035
+                                                      Root MSE          =     10.808
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .1244465    .096195     1.29   0.202    -.0688646    .3177576
+             _cons |   8.532241   1.654065     5.16   0.000     5.208272    11.85621
+      ------------------------------------------------------------------------------
+      
+     4 . predict mrdrtehat
+      (option xb assumed; fitted values)
+      
+     5 . scatter mrdrte exec || line mrdrtehat exec
+      
+     6 . qreg mrdrte exec, vce(robust)
+      
+      Iteration 1:  WLS sum of weighted deviations =  116.30688
+      
+      Iteration 1:  Sum of abs. weighted deviations =  116.67857
+      Iteration 2:  Sum of abs. weighted deviations =  113.37857
+      Iteration 3:  Sum of abs. weighted deviations =  111.99706
+      Iteration 4:  Sum of abs. weighted deviations =   111.9913
+      
+      Median regression                                   Number of obs =         51
+        Raw sum of deviations   117.65 (about 6.8000002)
+        Min sum of deviations 111.9913                    Pseudo R2     =     0.0481
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .1565217   .8104254     0.19   0.848    -1.472089    1.785133
+             _cons |   6.578261   1.160854     5.67   0.000     4.245439    8.911084
+      ------------------------------------------------------------------------------
+      
+     7 . reg mrdrte exec if state!="DC", robust
+      
+      Linear regression                               Number of obs     =         50
+                                                      F(1, 48)          =      10.18
+                                                      Prob > F          =     0.0025
+                                                      R-squared         =     0.0739
+                                                      Root MSE          =     3.8737
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .2119062   .0664227     3.19   0.003     .0783544    .3454581
+             _cons |    6.99295   .5734721    12.19   0.000     5.839907    8.145993
+      ------------------------------------------------------------------------------
+      
+     8 . use https://users.ssc.wisc.edu/~mckelvey/ec400/smoking, clear
+      (Source: Stock and Watson, Updated 3rd Edition)
+      
+     9 . des
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/smoking.dta
+       Observations:        10,000                  Source: Stock and Watson, Updated 3rd
+                                                      Edition
+          Variables:            10                  31 Oct 2018 08:18
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      smoker          byte    %8.0g                 =1 if a current smoker
+      smkban          byte    %9.0g                 =1 if there is a work area smoking bans
+      age             byte    %9.0g                 age in years
+      hsdrop          byte    %9.0g                 =1 if hs dropout
+      hsgrad          byte    %9.0g                 =1 if hs grad
+      colsome         byte    %9.0g                 =1 if some college
+      colgrad         byte    %9.0g                 =1 if college grad
+      black           byte    %9.0g                 =1 if black
+      hispanic        byte    %9.0g                 =1 if hispanic
+      female          byte    %9.0g                 =1 if female
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+    10 . regress smoker age, robust
+      
+      Linear regression                               Number of obs     =     10,000
+                                                      F(1, 9998)        =      12.41
+                                                      Prob > F          =     0.0004
+                                                      R-squared         =     0.0012
+                                                      Root MSE          =     .42827
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            smoker | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0012088   .0003431    -3.52   0.000    -.0018814   -.0005362
+             _cons |   .2890714   .0141323    20.45   0.000     .2613693    .3167734
+      ------------------------------------------------------------------------------
+      
+    11 . logit smoker age, robust
+      
+      Iteration 0:  Log pseudolikelihood = -5537.1662  
+      Iteration 1:  Log pseudolikelihood = -5531.2856  
+      Iteration 2:  Log pseudolikelihood = -5531.2823  
+      Iteration 3:  Log pseudolikelihood = -5531.2823  
+      
+      Logistic regression                                     Number of obs = 10,000
+                                                              Wald chi2(1)  =  12.11
+                                                              Prob > chi2   = 0.0005
+      Log pseudolikelihood = -5531.2823                       Pseudo R2     = 0.0011
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            smoker | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0066627   .0019145    -3.48   0.001     -.010415   -.0029104
+             _cons |  -.8839928   .0767918   -11.51   0.000    -1.034502   -.7334837
+      ------------------------------------------------------------------------------
+      
+    12 . margins, dydx(*)
+      
+      Average marginal effects                                Number of obs = 10,000
+      Model VCE: Robust
+      
+      Expression: Pr(smoker), predict()
+      dy/dx wrt:  age
+      
+      ------------------------------------------------------------------------------
+                   |            Delta-method
+                   |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0012218   .0003506    -3.48   0.000    -.0019089   -.0005346
+      ------------------------------------------------------------------------------
+      
+    13 . probit smoker age, robust
+      
+      Iteration 0:  Log pseudolikelihood = -5537.1662  
+      Iteration 1:  Log pseudolikelihood = -5531.2413  
+      Iteration 2:  Log pseudolikelihood = -5531.2407  
+      Iteration 3:  Log pseudolikelihood = -5531.2407  
+      
+      Probit regression                                       Number of obs = 10,000
+                                                              Wald chi2(1)  =  12.17
+                                                              Prob > chi2   = 0.0005
+      Log pseudolikelihood = -5531.2407                       Pseudo R2     = 0.0011
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            smoker | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0039336   .0011276    -3.49   0.000    -.0061436   -.0017237
+             _cons |   -.547524   .0454272   -12.05   0.000    -.6365597   -.4584883
+      ------------------------------------------------------------------------------
+      
+    14 . margins, dydx(*)
+      
+      Average marginal effects                                Number of obs = 10,000
+      Model VCE: Robust
+      
+      Expression: Pr(smoker), predict()
+      dy/dx wrt:  age
+      
+      ------------------------------------------------------------------------------
+                   |            Delta-method
+                   |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0012278   .0003515    -3.49   0.000    -.0019167   -.0005389
+      ------------------------------------------------------------------------------
+      
+    15 . cd "C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets"
+      C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets
+      
+    16 . translate @Results problem_set_8.txt

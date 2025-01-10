@@ -1,0 +1,114 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      18.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2023
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased;
+                see help set_maxvar.
+            3. New update available; type -update all-
+      
+     1 . use https://users.ssc.wisc.edu/~mckelvey/ec400/collegedistance
+      (Source: Stock and Watson, Updated 3rd Edition)
+      
+     2 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/collegedistance.dta
+       Observations:         3,796                  Source: Stock and Watson, Updated 3rd
+                                                      Edition
+          Variables:            14                  9 Sep 2018 08:14
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      female          float   %9.0g                 1 = Female / 0 = Otherwise
+      black           float   %9.0g                 1 = Black / 0 = Otherwise
+      hispanic        float   %9.0g                 1 = Hispanic / 0 = Otherwise
+      bytest          float   %9.0g                 Base Year Test Score
+      dadcoll         float   %9.0g                 1 = Father is a College Grad / 0 =
+                                                      Otherwise
+      momcoll         float   %9.0g                 1 = Mother is a College Grad / 0 =
+                                                      Otherwise
+      ownhome         float   %9.0g                 1 = Family Owns Home / 0 = Otherwise
+      urban           float   %9.0g                 1 = School in Urban Area / 0 = Otherwise
+      cue80           float   %9.0g                 County Unempolyment Rate in 1980
+      stwmfg80        float   %9.0g                 State Hourly Wage in Manufacturing in 1980
+      dist            float   %9.0g                 Distance to 4yr College in 10's of miles
+      tuition         float   %9.0g                 Avg State 4yr College Tuition in $1000's
+      incomehi        float   %9.0g                 1 = Family Income > $25000 per year / 0 =
+                                                      Otherwise
+      ed              float   %9.0g                 Years of Education Completed
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     3 . regress ed dist
+      
+            Source |       SS           df       MS      Number of obs   =     3,796
+      -------------+----------------------------------   F(1, 3794)      =     28.48
+             Model |  93.0256754         1  93.0256754   Prob > F        =    0.0000
+          Residual |  12394.3568     3,794    3.266831   R-squared       =    0.0074
+      -------------+----------------------------------   Adj R-squared   =    0.0072
+             Total |  12487.3825     3,795  3.29048287   Root MSE        =    1.8074
+      
+      ------------------------------------------------------------------------------
+                ed | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              dist |  -.0733727   .0137498    -5.34   0.000    -.1003304    -.046415
+             _cons |   13.95586   .0377241   369.95   0.000     13.88189    14.02982
+      ------------------------------------------------------------------------------
+      
+     4 . generate dist100 = dist/10
+      
+     5 . regress ed dist100
+      
+            Source |       SS           df       MS      Number of obs   =     3,796
+      -------------+----------------------------------   F(1, 3794)      =     28.48
+             Model |   93.025674         1   93.025674   Prob > F        =    0.0000
+          Residual |  12394.3568     3,794  3.26683101   R-squared       =    0.0074
+      -------------+----------------------------------   Adj R-squared   =    0.0072
+             Total |  12487.3825     3,795  3.29048287   Root MSE        =    1.8074
+      
+      ------------------------------------------------------------------------------
+                ed | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+           dist100 |  -.7337271    .137498    -5.34   0.000    -1.003304   -.4641499
+             _cons |   13.95586   .0377241   369.95   0.000     13.88189    14.02982
+      ------------------------------------------------------------------------------
+      
+     6 . browse
+      
+     7 . predict edhat
+      (option xb assumed; fitted values)
+      
+     8 . scatter ed dist100 || line edhat dist100
+      
+     9 . 2000/100
+      2000 is not a valid command name
+      r(199);
+      
+    10 . cd "C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets"
+      C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets
+      
+    11 . translate @Results problem_set_2
+      translator option required
+      r(198);
+      
+    12 . translate @Results problem_set_2.txt

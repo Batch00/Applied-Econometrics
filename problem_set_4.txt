@@ -1,0 +1,139 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      18.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2023
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased;
+                see help set_maxvar.
+            3. New update available; type -update all-
+      
+     1 . use https://users.ssc.wisc.edu/~mckelvey/ec400/gss2016
+      (Source: 2016 General Social Survey)
+      
+     2 . 
+     3 . 
+     4 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/gss2016.dta
+       Observations:         1,893                  Source: 2016 General Social Survey
+          Variables:             4                  25 Sep 2018 17:58
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      educ            byte    %8.0g      LABAF      highest year of school completed
+      maeduc          byte    %8.0g      LABAF      highest year school completed, mother
+      paeduc          byte    %8.0g      LABAF      highest year school completed, father
+      zodiac          byte    %8.0g      ZODIAC     respondents astrological sign
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     5 . regress educ maeduc paeduc, robust
+      
+      Linear regression                               Number of obs     =      1,893
+                                                      F(2, 1890)        =     163.73
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.1988
+                                                      Root MSE          =     2.6274
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            maeduc |   .1623587   .0241545     6.72   0.000     .1149865    .2097309
+            paeduc |   .2043167   .0203338    10.05   0.000     .1644378    .2441957
+             _cons |   9.813727   .2697223    36.38   0.000     9.284742    10.34271
+      ------------------------------------------------------------------------------
+      
+     6 . tabulate educ
+      
+          highest |
+          year of |
+           school |
+        completed |      Freq.     Percent        Cum.
+      ------------+-----------------------------------
+                0 |          1        0.05        0.05
+                1 |          3        0.16        0.21
+                2 |          3        0.16        0.37
+                3 |          1        0.05        0.42
+                4 |          1        0.05        0.48
+                5 |          1        0.05        0.53
+                6 |         18        0.95        1.48
+                7 |          8        0.42        1.90
+                8 |         16        0.85        2.75
+                9 |         25        1.32        4.07
+               10 |         40        2.11        6.18
+               11 |         52        2.75        8.93
+               12 |        512       27.05       35.97
+               13 |        162        8.56       44.53
+               14 |        246       13.00       57.53
+               15 |         89        4.70       62.23
+               16 |        360       19.02       81.25
+               17 |         88        4.65       85.90
+               18 |        127        6.71       92.60
+               19 |         50        2.64       95.25
+               20 |         90        4.75      100.00
+      ------------+-----------------------------------
+            Total |      1,893      100.00
+      
+     7 . reg educ maeduc, robust
+      
+      Linear regression                               Number of obs     =      1,893
+                                                      F(1, 1891)        =     237.35
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.1572
+                                                      Root MSE          =     2.6941
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            maeduc |   .3171007   .0205829    15.41   0.000     .2767331    .3574683
+             _cons |   10.38986   .2645532    39.27   0.000     9.871017    10.90871
+      ------------------------------------------------------------------------------
+      
+     8 . reg educ maeduc paeduc zodiac, robust
+      
+      Linear regression                               Number of obs     =      1,893
+                                                      F(3, 1889)        =     109.20
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.1989
+                                                      Root MSE          =     2.6281
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            maeduc |   .1624652    .024162     6.72   0.000     .1150782    .2098523
+            paeduc |   .2042695   .0203412    10.04   0.000     .1643759    .2441632
+            zodiac |   .0058371   .0179733     0.32   0.745    -.0294126    .0410867
+             _cons |   9.775866   .2973056    32.88   0.000     9.192784    10.35895
+      ------------------------------------------------------------------------------
+      
+     9 . cd "C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets"
+      C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets
+      
+    10 . translate @Results problem_set_4
+      translator option required
+      r(198);
+      
+    11 . translate @Results problem_set_4.txt

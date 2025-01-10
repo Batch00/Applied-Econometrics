@@ -1,0 +1,192 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      18.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2024
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased;
+                see help set_maxvar.
+            3. New update available; type -update all-
+      
+     1 . use https://users.ssc.wisc.edu/~mckelvey/ec400/nsw
+      (Lalonde (1986) and Dehejia and Wahba (1999))
+      
+     2 . 
+     3 . 
+     4 . des
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/nsw.dta
+       Observations:           722                  Lalonde (1986) and Dehejia and Wahba
+                                                      (1999)
+          Variables:             8                  2 Apr 2019 17:10
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      treat           byte    %8.0g                 =1 if assigned to treatment
+      age             byte    %8.0g                 Age (in years)
+      education       byte    %8.0g                 Education (in years)
+      black           byte    %8.0g                 =1 if black
+      hispanic        byte    %8.0g                 =1 if hispanic
+      married         byte    %8.0g                 =1 if married
+      nodegree        byte    %8.0g                 =1 if no high school degree
+      re78            float   %9.0g                 Real earnings in 1978
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     5 . reg age treat, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(1, 720)         =       0.13
+                                                      Prob > F          =     0.7216
+                                                      R-squared         =     0.0002
+                                                      Root MSE          =       6.63
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+               age | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |   .1792038   .5026692     0.36   0.722    -.8076687    1.166076
+             _cons |   24.44706   .3197422    76.46   0.000     23.81932     25.0748
+      ------------------------------------------------------------------------------
+      
+     6 . reg education treat, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(1, 720)         =       2.14
+                                                      Prob > F          =     0.1441
+                                                      R-squared         =     0.0031
+                                                      Root MSE          =     1.7033
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+         education | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |   .1922361   .1314755     1.46   0.144     -.065885    .4503572
+             _cons |   10.18824   .0785342   129.73   0.000     10.03405    10.34242
+      ------------------------------------------------------------------------------
+      
+     7 . reg  black treat, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(1, 720)         =       0.00
+                                                      Prob > F          =     0.9645
+                                                      R-squared         =     0.0000
+                                                      Root MSE          =     .40014
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             black | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |   .0013468   .0302489     0.04   0.964    -.0580399    .0607335
+             _cons |         .8   .0194298    41.17   0.000     .7618542    .8381458
+      ------------------------------------------------------------------------------
+      
+     8 . reg hispanic treat, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(1, 720)         =       0.66
+                                                      Prob > F          =     0.4154
+                                                      R-squared         =     0.0009
+                                                      Root MSE          =     .30718
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+          hispanic | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |  -.0186651    .022906    -0.81   0.415    -.0636357    .0263055
+             _cons |   .1129412   .0153748     7.35   0.000     .0827563     .143126
+      ------------------------------------------------------------------------------
+      
+     9 . reg married treat, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(1, 720)         =       0.15
+                                                      Prob > F          =     0.7028
+                                                      R-squared         =     0.0002
+                                                      Root MSE          =     .36897
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+           married | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |   .0107031   .0280365     0.38   0.703    -.0443399    .0657461
+             _cons |   .1576471    .017701     8.91   0.000     .1228953    .1923988
+      ------------------------------------------------------------------------------
+      
+    10 . reg nodegree treat, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(1, 720)         =       6.82
+                                                      Prob > F          =     0.0092
+                                                      R-squared         =     0.0098
+                                                      Root MSE          =     .41293
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+          nodegree | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |  -.0834779   .0319616    -2.61   0.009     -.146227   -.0207288
+             _cons |   .8141176    .018896    43.08   0.000     .7770197    .8512155
+      ------------------------------------------------------------------------------
+      
+    11 . reg re78 treat, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(1, 720)         =       3.30
+                                                      Prob > F          =     0.0698
+                                                      R-squared         =     0.0049
+                                                      Root MSE          =       6242
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              re78 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |   886.3037   488.1385     1.82   0.070    -72.04121    1844.649
+             _cons |   5090.048   277.4261    18.35   0.000     4545.388    5634.709
+      ------------------------------------------------------------------------------
+      
+    12 . reg re78 treat age education black hispanic married nodegree, robust
+      
+      Linear regression                               Number of obs     =        722
+                                                      F(7, 714)         =       2.77
+                                                      Prob > F          =     0.0077
+                                                      R-squared         =     0.0247
+                                                      Root MSE          =     6205.4
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              re78 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             treat |   793.6092   487.1856     1.63   0.104    -162.8784    1750.097
+               age |   20.10478   34.96709     0.57   0.565    -48.54584    88.75539
+         education |   205.8794   166.4133     1.24   0.216    -120.8385    532.5972
+             black |  -1765.638    772.216    -2.29   0.023    -3281.724   -249.5528
+          hispanic |  -133.9468   986.9064    -0.14   0.892    -2071.532    1803.639
+           married |   540.9907   679.8988     0.80   0.426    -793.8491    1875.831
+          nodegree |  -522.3149   757.2796    -0.69   0.491    -2009.076    964.4462
+             _cons |   4268.577   2625.733     1.63   0.104    -886.5039    9423.658
+      ------------------------------------------------------------------------------
+      
+    13 . cd "C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets"
+      C:\Users\carso\OneDrive - UW-Madison\23_24_Fall\econ400\problem sets
+      
+    14 . translate @Results problem_set_9.txt

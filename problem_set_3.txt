@@ -1,0 +1,192 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      18.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2023
+      Serial number: 401809302077
+        Licensed to: Carson Batchelor
+                     UW Madison
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased;
+                see help set_maxvar.
+            3. New update available; type -update all-
+      
+     1 . use https://users.ssc.wisc.edu/~mckelvey/ec400/earningsheight
+      (Source: Stock and Watson, Updated 3rd Edition)
+      
+     2 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/earningsheight.dta
+       Observations:        17,870                  Source: Stock and Watson, Updated 3rd
+                                                      Edition
+          Variables:            11                  3 Oct 2018 08:53
+      -----------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------
+      sex             byte    %9.0g      sex        Sex
+      age             byte    %12.0g     age        Age
+      mrd             byte    %24.0g     mrd        Marital Status
+      educ            byte    %9.0g                 Years of Education
+      cworker         byte    %18.0g     cworker    Class of Worker
+      region          byte    %11.0g     region     Region
+      race            float   %20.0g     race       Race/ethnicity
+      earnings        float   %9.0g                 Annual labor earnings (in 2012 US dollars)
+      height          float   %9.0g                 Height without shoes (in inches)
+      weight          float   %9.0g                 Weight without shoes (in pounds)
+      occupation      float   %23.0g     occ        Occupational category
+      -----------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     3 . reg earnings height, robust
+      
+      Linear regression                               Number of obs     =     17,870
+                                                      F(1, 17868)       =     197.19
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0109
+                                                      Root MSE          =      26777
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+          earnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            height |   707.6716   50.39502    14.04   0.000     608.8924    806.4507
+             _cons |  -512.7336   3379.864    -0.15   0.879    -7137.594    6112.126
+      ------------------------------------------------------------------------------
+      
+     4 . gen hispanic = (race == 3)
+      
+     5 . 
+     6 . reg earnings hispanic, robust
+      
+      Linear regression                               Number of obs     =     17,870
+                                                      F(1, 17868)       =     182.57
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0098
+                                                      Root MSE          =      26791
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+          earnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+          hispanic |  -10109.37   748.1926   -13.51   0.000     -11575.9   -8642.844
+             _cons |   47638.48   208.6901   228.27   0.000     47229.42    48047.53
+      ------------------------------------------------------------------------------
+      
+     7 . tabulate hispanic
+      
+         hispanic |      Freq.     Percent        Cum.
+      ------------+-----------------------------------
+                0 |     16,521       92.45       92.45
+                1 |      1,349        7.55      100.00
+      ------------+-----------------------------------
+            Total |     17,870      100.00
+      
+     8 . tabulate race
+      
+            Race/ethnicity |      Freq.     Percent        Cum.
+      ---------------------+-----------------------------------
+      1:Non-hispanic white |     13,767       77.04       77.04
+      2:Non-hispanic black |      2,029       11.35       88.39
+                3:Hispanic |      1,349        7.55       95.94
+                   4:Other |        725        4.06      100.00
+      ---------------------+-----------------------------------
+                     Total |     17,870      100.00
+      
+     9 . tabulate height
+      
+           Height |
+          without |
+        shoes (in |
+          inches) |      Freq.     Percent        Cum.
+      ------------+-----------------------------------
+               48 |          2        0.01        0.01
+               49 |          2        0.01        0.02
+               51 |          1        0.01        0.03
+               52 |          1        0.01        0.03
+               53 |          1        0.01        0.04
+               55 |          4        0.02        0.06
+               56 |          8        0.04        0.11
+               57 |         15        0.08        0.19
+               58 |         30        0.17        0.36
+               59 |        158        0.88        1.24
+               60 |        478        2.67        3.92
+               61 |        567        3.17        7.09
+               62 |      1,245        6.97       14.06
+               63 |      1,279        7.16       21.21
+               64 |      1,656        9.27       30.48
+               65 |      1,440        8.06       38.54
+               66 |      1,719        9.62       48.16
+               67 |      1,508        8.44       56.60
+               68 |      1,507        8.43       65.03
+               69 |      1,169        6.54       71.57
+               70 |      1,256        7.03       78.60
+               71 |      1,101        6.16       84.76
+               72 |      1,163        6.51       91.27
+               73 |        600        3.36       94.63
+               74 |        512        2.87       97.49
+               75 |        250        1.40       98.89
+               76 |        125        0.70       99.59
+               77 |         33        0.18       99.78
+               78 |         26        0.15       99.92
+               79 |          7        0.04       99.96
+               80 |          4        0.02       99.98
+               81 |          1        0.01       99.99
+               83 |          1        0.01       99.99
+               84 |          1        0.01      100.00
+      ------------+-----------------------------------
+            Total |     17,870      100.00
+      
+    10 . gen tall = (height >= 77)
+      
+    11 . reg earnings tall, robust
+      
+      Linear regression                               Number of obs     =     17,870
+                                                      F(1, 17868)       =       6.88
+                                                      Prob > F          =     0.0087
+                                                      R-squared         =     0.0004
+                                                      Root MSE          =      26919
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+          earnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              tall |   8385.707   3197.988     2.62   0.009     2117.342    14654.07
+             _cons |   46841.07   201.7706   232.15   0.000     46445.58    47236.56
+      ------------------------------------------------------------------------------
+      
+    12 . display (707.6716 - 800)/50.39502
+      -1.8320937
+      
+    13 . reg earnings hispanic, robust level(90)
+      
+      Linear regression                               Number of obs     =     17,870
+                                                      F(1, 17868)       =     182.57
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0098
+                                                      Root MSE          =      26791
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+          earnings | Coefficient  std. err.      t    P>|t|     [90% conf. interval]
+      -------------+----------------------------------------------------------------
+          hispanic |  -10109.37   748.1926   -13.51   0.000     -11340.1   -8878.642
+             _cons |   47638.48   208.6901   228.27   0.000     47295.19    47981.76
+      ------------------------------------------------------------------------------
+      
+    14 . translate @Results problem_set_3.txt
